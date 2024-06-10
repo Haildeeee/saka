@@ -42,3 +42,4 @@ Route::post('/contacts', [AddContactController::class, 'store'])->name('contact.
 Route::get('/contacts/{contact}/edit', [AddContactController::class, 'edit'])->name('contact.edit');
 Route::put('/contacts/{contact}', [AddContactController::class, 'update'])->name('contact.update');
 Route::delete('/contacts/{contact}', [AddContactController::class, 'destroy'])->name('contact.destroy');
+Route::post('/login', 'LoginController@login');

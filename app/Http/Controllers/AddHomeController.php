@@ -19,20 +19,26 @@ class AddHomeController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'hero' => 'required',
-            'deskripsi' => 'required',
-            'foto1' => 'required',
-            'foto2' => 'required',
-            'foto3' => 'required',
-        ]);
+{
+    $request->validate([
+        'hero' => 'required',
+        'deskripsi' => 'required',
+        'foto1' => 'required',
+        'foto2' => 'required',
+        'foto3' => 'required',
+    ]);
 
-        Home::create($request->all());
+    $home = new Home();
+    $home->hero = $request->input('hero');
+    $home->deskripsi = $request->input('deskripsi');
+    $home->foto1 = $request->input('foto1');
+    $home->foto2 = $request->input('foto2');
+    $home->foto3 = $request->input('foto3');
+   
 
-        return redirect()->route('home.index')
-            ->with('success', 'Data Home berhasil ditambahkan.');
-    }
+    return redirect()->route('home.index')
+        ->with('success', 'Data Home berhasil ditambahkan.');
+}
 
     public function edit(Home $home)
     {

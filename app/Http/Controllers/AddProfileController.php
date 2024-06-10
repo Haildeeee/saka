@@ -10,8 +10,8 @@ class AddProfileController extends Controller
     //
     public function index()
     {
-        $profiles = Profile::all();
-        return view('layouts.private.profile.index', compact('profiles'));
+        $profiles = Profile::all(); // or whatever data you want to pass to the view
+        return view('layouts.private.profile.index')->with('profiles', $profiles);
     }
 
     public function create()

@@ -9,10 +9,8 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="{{ asset('img/favicon.png') }}" rel="icon">
-  <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
-
+ 
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -61,20 +59,51 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <h1 class="logo"><a href="index.html"style="font-family: 'Garamond', sans-serif;">MY PORTFOLIO</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="{{ asset('') }}img/logo.png" alt="" class="img-fluid"></a>-->
-
       <nav id="navbar" class="navbar">
+  <!-- Uncomment below if you prefer to use an image logo -->
+  <!-- <a href="index.html" class="logo"><img src="{{ asset('') }}img/logo.png" alt="" class="img-fluid"></a> -->
         <ul>
-          <li><a class="" href="/">Home</a></li>
-          <li><a href="profile">Profile</a></li>
-          <li><a href="contact">Contact</a></li>
-         <button onclick="location.href='login'" class="div-6">Login</button>
-
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="profile" class="nav-link">Profile</a></li>
+          <li><a href="contact" class="nav-link">Contact</a></li>
         </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
 
+        <button onclick="location.href='login'" class="btn btn-primary login-btn">Login</button>
+
+        <i class="bi bi-list mobile-nav-toggle"></i>
+                      <style>
+                      .navbar {
+                      background-color:none;
+                      padding: 1rem;
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    }
+
+                    .nav-link {
+                      color: #fff;
+                      text-decoration: none;
+                      transition: color 0.2s ease;
+                    }
+
+                    .nav-link:hover {
+                      color: #ccc;
+                    }
+
+                    .login-btn {
+                      background-color: #337ab7;
+                      color: #fff;
+                      border: none;
+                      padding: 0.5rem 1rem;
+                      font-size: 1rem;
+                      cursor: pointer;
+                    }
+
+                    .login-btn:hover {
+                      background-color: #23527c;
+                    }
+                    </style>
+</nav>
     </div>
   </header><!-- End Header -->
 
@@ -82,9 +111,9 @@
         @yield('content')
 
         <footer id="footer" style="background-color: #FFC0CB;">
-    <div class="container">
-        <h3 style="font-family: 'Garamond', sans-serif;">MY PORTFOLIO</h3>
-        <div class="social-links">
+          <div class="container">
+             <h3 style="font-family: 'Garamond', sans-serif;">MY PORTFOLIO</h3>
+             <div class="social-links">
             <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
             <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
             <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
