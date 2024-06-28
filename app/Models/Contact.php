@@ -10,7 +10,7 @@ class Contact extends Model
     use HasFactory;
 
     protected $table = "contact";
-    protected $fillable = ['location','email','phone'];
+    protected $fillable = ['name', 'email', 'phone_number', 'contact_message'];
     public $timestamps = false;
 
 }

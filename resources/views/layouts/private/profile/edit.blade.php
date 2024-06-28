@@ -3,60 +3,52 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Edit Data Profile</div>
+                <div class="card-header">Edit Profile Data</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('profile.update', $profile->id) }}" enctype="multipart/form-data">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('profile.update', $profile->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        <div class="form-group">
-                            <label for="image">Image</label>
-                            <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" required autofocus>
-                            @error('image')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="mb-3">
+                            <label for="education" class="form-label">Education</label>
+                            <input type="text" id="education" name="education" class="form-control" value="{{ old('education', $profile->education) }}" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $profile->name }}" required>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" id="image" name="image" class="form-control">
+                            @if ($profile->image)
+                                <img src="{{ Storage::url($profile->image) }}" alt="Image" style="width: 100px;">
+                            @endif
                         </div>
 
-                        <div class="form-group">
-                            <label for="ttl">TTL</label>
-                            <input id="ttl" type="text" class="form-control @error('ttl') is-invalid @enderror" name="ttl" value="{{ $profile->ttl }}" required>
-                            @error('ttl')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="mb-3">
+                            <label for="passion" class="form-label">Passion</label>
+                            <input type="text" id="passion" name="passion" class="form-control" value="{{ old('passion', $profile->passion) }}" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="skill">Skill</label>
-                            <input id="skill" type="text" class="form-control @error('skill') is-invalid @enderror" name="skill" value="{{ $profile->skill }}" required>
-                            @error('skill')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="mb-3">
+                            <label for="image2" class="form-label">Image 2</label>
+                            <input type="file" id="image2" name="image2" class="form-control">
+                            @if ($profile->image2)
+                                <img src="{{ Storage::url($profile->image2) }}" alt="Image 2" style="width: 100px;">
+                            @endif
                         </div>
 
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
-                                Simpan
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </form>
                 </div>
             </div>

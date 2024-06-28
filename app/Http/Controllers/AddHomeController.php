@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Home;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AddHomeController extends Controller
 {
@@ -19,27 +20,30 @@ class AddHomeController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'hero' => 'required',
-        'deskripsi' => 'required',
-        'foto1' => 'required',
-        'foto2' => 'required',
-        'foto3' => 'required',
-    ]);
+    {
+        $request->validate([
+            'about' => 'required|string',
+            'expertise' => 'required|string',
+            'image' => 'nullable|image|max:2048', 
+        ]);
 
-    $home = new Home();
-    $home->hero = $request->input('hero');
-    $home->deskripsi = $request->input('deskripsi');
-    $home->foto1 = $request->input('foto1');
-    $home->foto2 = $request->input('foto2');
-    $home->foto3 = $request->input('foto3');
-   
+        $home = new Home();
+        $home->about = $request->input('about');
+        $home->expertise = $request->input('expertise');
 
-    return redirect()->route('home.index')
-        ->with('success', 'Data Home berhasil ditambahkan.');
-}
+        // Proses upload gambar jika ada
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/images');
 
+            // Simpan path gambar yang valid untuk diakses
+            $home->image = $imagePath;
+        }
+
+        $home->save();
+
+        return redirect()->route('home.index')
+            ->with('success', 'Data Home berhasil ditambahkan.');
+    }
     public function edit(Home $home)
     {
         return view('layouts.private.home.edit', compact('home'));
@@ -48,21 +52,41 @@ class AddHomeController extends Controller
     public function update(Request $request, Home $home)
     {
         $request->validate([
-            'hero' => 'required',
-            'deskripsi' => 'required',
-            'foto1' => 'required',
-            'foto2' => 'required',
-            'foto3' => 'required',
+            'about' => 'required|string',
+            'expertise' => 'required|string',
+            'image' => 'nullable|image|max:2048', 
         ]);
 
-        $home->update($request->all());
+        $home->about = $request->input('about');
+        $home->expertise = $request->input('expertise');
+
+        // Proses update gambar jika ada
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($home->image) {
+                Storage::delete(str_replace('storage', 'public', $home->image));
+            }
+
+            $imagePath = $request->file('image')->store('public/images');
+            // Simpan path gambar relatif ke dalam model
+            $home->image = str_replace('public', 'storage', Storage::url($imagePath));
+        }
+
+        $home->save();
 
         return redirect()->route('home.index')
             ->with('success', 'Data Home berhasil diperbarui.');
     }
 
+
     public function destroy(Home $home)
     {
+        // Hapus gambar terkait sebelum menghapus data
+        if ($home->image) {
+            // Ubah path storage untuk menghapus file
+            Storage::delete('public/' . $home->image);
+        }
+
         $home->delete();
 
         return redirect()->route('home.index')

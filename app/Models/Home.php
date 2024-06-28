@@ -2,23 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Home extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'home';
+
     protected $fillable = [
-        'hero',
-        'deskripsi',
-        'foto1',
-        'foto2',
-        'foto3',
+        'about',
+        'expertise',
+        'image',
     ];
+    public $timestamps = false;
+
 }

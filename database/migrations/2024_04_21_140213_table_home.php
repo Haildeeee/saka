@@ -14,11 +14,10 @@ return new class extends Migration
         //
         Schema::create('home', function (Blueprint $table) {
             $table->id();
-            $table->string('hero');
-            $table->longText('deskripsi');
-            $table->string('foto1');
-            $table->string('foto2');
-            $table->string('foto3');
+            $table->string('about');
+            $table->longText('expertise');
+            $table->string('image')->nullable();
+           
 
         });
     }

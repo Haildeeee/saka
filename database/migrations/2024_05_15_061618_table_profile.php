@@ -14,10 +14,10 @@ return new class extends Migration
         //
         Schema::create('profile', function (Blueprint $table) {
             $table->id();
+            $table->string('education');
             $table->string('image');
-            $table->string('name');
-            $table->string('ttl');
-            $table->string('skill');
+            $table->string('passion');
+            $table->string('image2');
 
         });
     }

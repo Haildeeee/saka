@@ -25,6 +25,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
+
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -33,7 +34,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-               
+
             </a>
 
             <!-- Divider -->
@@ -96,39 +97,43 @@
                     </button>
 
                     <!-- Topbar Search -->
-                  
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Haildee</span>
-                                <img class="img-profile rounded-circle" src="{{asset('img/image.jpg')}}">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$user->name}}</span>
+                                    <img class="img-profile rounded-circle" src="{{ asset('img/image.jpg') }}">
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Settings
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Activity Log
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <!-- Logout Link with Form -->
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
 
                     </ul>
 
@@ -137,17 +142,17 @@
 
                 @yield('content')
                 <!-- Bootstrap core JavaScript-->
-                <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-                <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+                <script src="{{asset('js/vendor/jquery/jquery.min.js')}}"></script>
+                <script src="{{asset('js/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
                 <!-- Core plugin JavaScript-->
-                <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+                <script src="{{asset('js/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
                 <!-- Custom scripts for all pages-->
                 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
                 <!-- Page level plugins -->
-                <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
+                <script src="{{asset('js/vendor/chart.js/Chart.min.js')}}"></script>
 
                 <!-- Page level custom scripts -->
                 <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>

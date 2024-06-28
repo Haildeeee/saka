@@ -4,93 +4,94 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AddProfileController extends Controller
 {
-    //
+
     public function index()
     {
-        $profiles = Profile::all(); // or whatever data you want to pass to the view
-        return view('layouts.private.profile.index')->with('profiles', $profiles);
+        $profiles = Profile::all();
+        return view('layouts.private.profile.index', compact('profiles'));
     }
+
 
     public function create()
     {
         return view('layouts.private.profile.create');
     }
 
+    
     public function store(Request $request)
     {
         $request->validate([
+            'education' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'required',
-            'ttl' => 'required',
-            'skill' => 'required',
+            'passion' => 'required|string',
+            'image2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Mengunggah gambar
-        $imageName = time().'.'.$request->image->extension();  
-        $request->image->move(public_path('images'), $imageName);
+        $profile = new Profile();
+        $profile->education = $request->input('education');
+        $profile->passion = $request->input('passion');
 
-        // Menyimpan data profil dengan nama file gambar
-        Profile::create([
-            'image' => $imageName,
-            'name' => $request->name,
-            'ttl' => $request->ttl,
-            'skill' => $request->skill,
-        ]);
+        if ($request->hasFile('image')) {
+            $profile->image = $request->file('image')->store('images', 'public');
+        }
+
+        if ($request->hasFile('image2')) {
+            $profile->image2 = $request->file('image2')->store('images', 'public');
+        }
+
+        $profile->save();
 
         return redirect()->route('profile.index')
-            ->with('success', 'Data profile berhasil ditambahkan.');
+            ->with('success', 'Profile data successfully added.');
     }
+
 
     public function edit(Profile $profile)
     {
         return view('layouts.private.profile.edit', compact('profile'));
     }
 
+
     public function update(Request $request, Profile $profile)
     {
         $request->validate([
-            'name' => 'required',
-            'ttl' => 'required',
-            'skill' => 'required',
+            'education' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'passion' => 'required|string',
+            'image2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Jika ada gambar baru yang diunggah, simpan gambar baru
-        if($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('images'), $imageName);
-            $profile->update([
-                'image' => $imageName,
-                'name' => $request->name,
-                'ttl' => $request->ttl,
-                'skill' => $request->skill,
-            ]);
-        } else {
-            // Jika tidak ada gambar baru, simpan data tanpa mengubah gambar
-            $profile->update([
-                'name' => $request->name,
-                'ttl' => $request->ttl,
-                'skill' => $request->skill,
-            ]);
+        $profile->education = $request->input('education');
+        $profile->passion = $request->input('passion');
+
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($profile->image);
+            $profile->image = $request->file('image')->store('images', 'public');
         }
 
+        if ($request->hasFile('image2')) {
+            Storage::disk('public')->delete($profile->image2);
+            $profile->image2 = $request->file('image2')->store('images', 'public');
+        }
+
+        $profile->save();
+
         return redirect()->route('profile.index')
-            ->with('success', 'Data profile berhasil diperbarui.');
+            ->with('success', 'Profile data successfully updated.');
     }
-    
+
+
     public function destroy(Profile $profile)
     {
-        // Hapus gambar dari direktori sebelum menghapus data profil
-        $image_path = public_path('images').'/'.$profile->image;
-        if(file_exists($image_path)) {
-            unlink($image_path);
-        }
-        
+        Storage::disk('public')->delete($profile->image);
+        Storage::disk('public')->delete($profile->image2);
         $profile->delete();
 
         return redirect()->route('profile.index')
-            ->with('success', 'Data profile berhasil dihapus.');
+            ->with('success', 'Profile data successfully deleted.');
     }
 }

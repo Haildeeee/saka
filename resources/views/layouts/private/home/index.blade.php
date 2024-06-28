@@ -20,29 +20,31 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Hero</th>
-                                    <th>Deskripsi</th>
-                                    <th>Foto 1</th>
-                                    <th>Foto 2</th>
-                                    <th>Foto 3</th>
-                                    <th>Action</th> <!-- Tambah kolom untuk aksi -->
+                                    <th>About</th>
+                                    <th>Expertise</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($homes as $home)
                                 <tr>
-                                    <td>{{ $home->hero }}</td> <!-- Menampilkan properti hero -->
-                                    <td>{{ $home->deskripsi }}</td>
-                                    <td><img src="{{ $home->foto1 }}" alt="Foto 1" style="width: 100px;"></td> <!-- Menampilkan foto 1 -->
-                                    <td><img src="{{ $home->foto2 }}" alt="Foto 2" style="width: 100px;"></td> <!-- Menampilkan foto 2 -->
-                                    <td><img src="{{ $home->foto3 }}" alt="Foto 3" style="width: 100px;"></td> <!-- Menampilkan foto 3 -->
+                                    <td>{{ $home->about }}</td>
+                                    <td>{{ $home->expertise }}</td>
+                                    <td>
+                                        @if($home->image)
+                                            <img src="{{ Storage::url($home->image) }}" alt="Home Image" style="width: 100px;">
+                                        @else
+                                            No image
+                                        @endif
+                                    </td>
                                     <td>
                                         <form action="{{ route('home.destroy', $home->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button> <!-- Tombol Hapus -->
+                                            <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                        <a href="{{ route('home.edit', $home->id) }}" class="btn btn-primary">Edit</a> <!-- Tombol Edit -->
+                                        <a href="{{ route('home.edit', $home->id) }}" class="btn btn-primary">Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach

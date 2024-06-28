@@ -9,8 +9,14 @@ class Profile extends Model
 {
     use HasFactory;
 
-    protected $table = "profile";
-    protected $fillable = ['image','name','ttl','skill'];
-    public $timestamps = false;
+    protected $table = 'profile';
 
+    protected $fillable = [
+        'education',
+        'image',
+        'passion',
+        'image2',
+    ];
+
+    public $timestamps = false;
 }
