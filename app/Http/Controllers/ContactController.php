@@ -27,22 +27,22 @@ class ContactController extends Controller
             'contact_message' => 'required',
         ]);
 
-        try {
+        // try {
             DB::beginTransaction();
             $contact = new Contact();
             $contact->name = $request->name;
             $contact->email = $request->email;
             $contact->phone_number = $request->phone_number;
-            $contact->message = $request->contact_message;
+            $contact->contact_message = $request->contact_message;
             $contact->save();
 
             $this->sendEmail($request->all());
             DB::commit();
             return redirect()->route('contact')->with('success', 'Thank you for your message');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('contact')->with('error', 'Failed to send message');
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     return redirect()->route('contact')->with('error', 'Failed to send message');
+        // }
     }
 
     private function sendEmail($data)
